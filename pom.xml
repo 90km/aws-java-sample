@@ -15,11 +15,13 @@
     </properties>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-ec2 -->
         <dependency>
             <groupId>com.amazonaws</groupId>
-            <artifactId>aws-java-sdk</artifactId>
-            <version>1.9.6</version>
+            <artifactId>aws-java-sdk-ec2</artifactId>
+            <version>1.11.408</version>
         </dependency>
+
     </dependencies>
 
     <build>
@@ -42,6 +44,14 @@
                 </executions>
                 <configuration>
                     <mainClass>com.amazonaws.samples.S3Sample</mainClass>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
                 </configuration>
             </plugin>
         </plugins>
