@@ -24,33 +24,36 @@ import com.amazonaws.services.ec2.model.Region;
 /**
  * Describes all regions and zones
  */
-public class DescribeRegionsAndZones
-{
-    public static void main(String[] args)
-    {
+public class DescribeRegionsAndZones {
+
+    public static void main(String[] args) {
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
 
         DescribeRegionsResult regions_response = ec2.describeRegions();
 
-        for(Region region : regions_response.getRegions()) {
+        for (Region region : regions_response.getRegions()) {
             System.out.printf(
                 "Found region %s " +
-                "with endpoint %s",
+                    "with endpoint %s",
                 region.getRegionName(),
                 region.getEndpoint());
+            System.out.println();
         }
+
+        System.out.println("*****************************************");
 
         DescribeAvailabilityZonesResult zones_response =
             ec2.describeAvailabilityZones();
 
-        for(AvailabilityZone zone : zones_response.getAvailabilityZones()) {
+        for (AvailabilityZone zone : zones_response.getAvailabilityZones()) {
             System.out.printf(
                 "Found availability zone %s " +
-                "with status %s " +
-                "in region %s",
+                    "with status %s " +
+                    "in region %s",
                 zone.getZoneName(),
                 zone.getState(),
                 zone.getRegionName());
+            System.out.println();
         }
     }
 }

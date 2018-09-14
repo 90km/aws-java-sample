@@ -13,35 +13,52 @@
  * permissions and limitations under the License.
  */
 package com.amazonaws.samples.ec2;
+
+import com.amazonaws.regions.Regions;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2ClientBuilder;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.DescribeRegionsResult;
 import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.Region;
 import com.amazonaws.services.ec2.model.Reservation;
 
 /**
  * Describes all EC2 instances associated with an AWS account
  */
-public class DescribeInstances
-{
-    public static void main(String[] args)
-    {
-        final AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
+public class DescribeInstances {
+
+
+    public static void main(String[] args) {
+        AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
+
+        DescribeRegionsResult regions_response = ec2.describeRegions();
+
+        for (Region region : regions_response.getRegions()) {
+            System.out.printf(
+                "Found region %s " +
+                    "with endpoint %s",
+                region.getRegionName(),
+                region.getEndpoint());
+            System.out.println();
+        }
+
+        //////////////////////////////////////////
         boolean done = false;
 
         DescribeInstancesRequest request = new DescribeInstancesRequest();
-        while(!done) {
+        while (!done) {
             DescribeInstancesResult response = ec2.describeInstances(request);
 
-            for(Reservation reservation : response.getReservations()) {
-                for(Instance instance : reservation.getInstances()) {
+            for (Reservation reservation : response.getReservations()) {
+                for (Instance instance : reservation.getInstances()) {
                     System.out.printf(
                         "Found instance with id %s, " +
-                        "AMI %s, " +
-                        "type %s, " +
-                        "state %s " +
-                        "and monitoring state %s",
+                            "AMI %s, " +
+                            "type %s, " +
+                            "state %s " +
+                            "and monitoring state %s",
                         instance.getInstanceId(),
                         instance.getImageId(),
                         instance.getInstanceType(),
@@ -50,9 +67,8 @@ public class DescribeInstances
                 }
             }
 
-            request.setNextToken(response.getNextToken());
-
-            if(response.getNextToken() == null) {
+            System.out.println("*****");
+            if (response.getNextToken() == null) {
                 done = true;
             }
         }
