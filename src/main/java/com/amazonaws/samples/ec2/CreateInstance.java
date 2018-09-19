@@ -34,13 +34,13 @@ public class CreateInstance
             "To run this example, supply an instance name and AMI image id\n" +
             "Ex: CreateInstance <instance-name> <ami-image-id>\n";
 
-        if (args.length != 2) {
+/*        if (args.length != 2) {
             System.out.println(USAGE);
             System.exit(1);
         }
-
-        String name = args[0];
-        String ami_id = args[1];
+*/
+        String name = "longsl-test";
+        String ami_id = "ami-5a696c20";
 
         final AmazonEC2 ec2 = AmazonEC2ClientBuilder.defaultClient();
 
